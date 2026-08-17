@@ -44,11 +44,11 @@ Test-set accuracy, 114 held-out samples:
 | 5 | K-Nearest Neighbors *(k=8, CV-selected)* | 95.61% |
 | 5 | XGBoost | 95.61% |
 
-> **Note on the notebook's summary table.** The `models` DataFrame near the end of the notebook pairs its
-> `Model` list with a `Score` list whose 2nd and 3rd entries are in the opposite order (`knn_acc` sits in
-> the `SVC` row and `svc_acc` in the `KNN` row). The table above is the corrected mapping, verified
-> against the per-model `classification_report` output printed higher up in the same notebook — SVM 0.98,
-> KNN 0.96. Fixing the list order in the notebook is a one-line change and is worth doing.
+> **Fixed:** the `models` summary DataFrame used to pair its `Model` list with a `Score` list whose 2nd and
+> 3rd entries were transposed — `knn_acc` landed in the `SVC` row and `svc_acc` in the `KNN` row — which
+> made KNN look like the top model. The list order is now correct, so re-running the notebook reproduces
+> the ranking above. It matches the per-model `classification_report` output printed higher up in the same
+> notebook (SVM 0.98, KNN 0.96).
 
 **Takeaway:** on 569 samples of well-separated, standardized numeric features, the margin-based and linear
 models win. SVC and plain logistic regression beat both the ensemble and the boosted tree — extra capacity
