@@ -37,17 +37,23 @@ Test-set accuracy, 114 held-out samples:
 
 | Rank | Model | Accuracy |
 |:--:|---|--:|
-| 1 | K-Nearest Neighbors *(k=8, CV-selected)* | **98.25%** |
+| 1 | Support Vector Classifier | **98.25%** |
 | 2 | Logistic Regression | 97.37% |
 | 3 | Decision Tree | 96.49% |
 | 3 | Random Forest | 96.49% |
-| 5 | Support Vector Classifier | 95.61% |
+| 5 | K-Nearest Neighbors *(k=8, CV-selected)* | 95.61% |
 | 5 | XGBoost | 95.61% |
 
-**Takeaway:** on 569 samples of well-separated, standardized numeric features, the simple models win.
-KNN and plain logistic regression beat both the ensemble and the boosted tree — extra capacity buys
-nothing when the decision boundary is nearly linear, and boosting has more room to overfit. 5-fold CV
-scores for the top models sit in the 0.92–0.98 band, so the gap between the top four is within noise;
+> **Note on the notebook's summary table.** The `models` DataFrame near the end of the notebook pairs its
+> `Model` list with a `Score` list whose 2nd and 3rd entries are in the opposite order (`knn_acc` sits in
+> the `SVC` row and `svc_acc` in the `KNN` row). The table above is the corrected mapping, verified
+> against the per-model `classification_report` output printed higher up in the same notebook — SVM 0.98,
+> KNN 0.96. Fixing the list order in the notebook is a one-line change and is worth doing.
+
+**Takeaway:** on 569 samples of well-separated, standardized numeric features, the margin-based and linear
+models win. SVC and plain logistic regression beat both the ensemble and the boosted tree — extra capacity
+buys nothing when the classes are nearly linearly separable, and boosting has more room to overfit. 5-fold
+CV scores for the top models sit in the 0.92–0.98 band, so the gap between the top four is within noise;
 the honest reading is *"everything works here, so ship the simplest thing."*
 
 Recall on the malignant class matters more than raw accuracy in this domain — the per-class
